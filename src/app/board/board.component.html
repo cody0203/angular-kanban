@@ -1,0 +1,66 @@
+<div class="board" cdkDropListGroup>
+  <mat-card class="tabs" *ngFor="let item of list; let listIndex = index">
+    <mat-card-title
+      >{{ item.name }}
+      {{item.jobs.length}}
+      <mat-icon
+        color="warn"
+        aria-label="Delete"
+        aria-hidden="false"
+        class="delete-icon"
+        (click)="onDeleteList(listIndex)"
+        >delete</mat-icon
+      >
+    </mat-card-title>
+    <div
+      class="items"
+      [cdkDropListData]="item.jobs"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
+      <ng-container *ngFor="let job of item.jobs; let jobIndex = index">
+        <ng-container *ngIf="job !== ''">
+          <div class="item" cdkDrag [cdkDragData]="job">
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            {{ job }}
+            <mat-icon
+              color="warn"
+              aria-label="Delete"
+              aria-hidden="false"
+              class="delete-icon"
+              (click)="onDeleteJob(listIndex, jobIndex)"
+              >delete</mat-icon
+            >
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="add-new-item">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="New Job" [(ngModel)]="item.newJobs" />
+      </mat-form-field>
+      <button
+        class="add-new-button"
+        mat-raised-button
+        color="primary"
+        (click)="onAddNewJob(item.newJobs, listIndex)"
+      >
+        Add
+      </button>
+    </div>
+  </mat-card>
+
+  <div class="add-new">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Add new Tab" [(ngModel)]="newList" />
+    </mat-form-field>
+    <button
+      class="add-new-button"
+      mat-raised-button
+      color="primary"
+      (click)="onAddNewList(newList)"
+    >
+      Add New
+    </button>
+  </div>
+</div>
